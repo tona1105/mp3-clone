@@ -43,6 +43,12 @@
 }
 
 /* ItemContent */
+.item-title {
+    width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
 .item__thumb {
     height: 40px;
     width: 40px;
@@ -83,6 +89,10 @@
     background-color: rgb(139, 139, 139);
     bottom: 10%;
     left: 0;
+}
+
+.item__playing {
+    background-color: #5664f1ba
 }
 
 /* Player */

@@ -36,7 +36,7 @@
                 <span>Thời gian</span>
             </div>
             <div v-for="(item, index) in listNewRelease" :key="index" class="position-relative item__lineDown"
-                @click="emitPlayList(index)">
+                @click="emitPlayList(index)" :class="itemPlayBG(item.title)">
                 <ItemNewRelease :music="item" :index="index"/>
             </div>
         </div>
@@ -47,7 +47,7 @@
 <script>
 import axios from 'axios'
 // import ItemContent from './ItemContent.vue';
-import { mapMutations } from 'vuex';
+import { mapMutations, mapGetters } from 'vuex';
 import ItemNewRelease from './ItemNewRelease.vue';
 
 export default {
@@ -67,6 +67,9 @@ export default {
     },
     components: {
         ItemNewRelease,
+    },
+    computed: {
+        ...mapGetters(['getIdPlay']),
     },
     created() {
         this.getListNewRelease()
@@ -94,6 +97,9 @@ export default {
             const listVN = this.filterList.filter(item => item.isWorldWide === false)
             this.listNewRelease = listVN
             this.isListChanged = true 
+        },
+        itemPlayBG(index) {
+            if (index === this.getIdPlay) return 'item__playing'
         },
         ...mapMutations(['updateSharedData']),
         async emitPlayList(index) {

@@ -39,6 +39,11 @@ const store = new Vuex.Store({
     getPlaylist(state) {
       return state.listPlay;
     },
+    getIdPlay(state) {
+      if(state.idPlay) {
+        return state.listPlay[state.idPlay].title
+      }
+    }
   }
 
 });

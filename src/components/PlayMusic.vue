@@ -6,8 +6,8 @@
                 :class="isPlayed ? 'cd__spin' : ''">
             </div>
             <div class="text-light mx-3">
-                <div>{{ itemTitle }}</div>
-                <div>{{ itemArtist }}</div>
+                <div class="item-title">{{ itemTitle }}</div>
+                <div class="item-title">{{ itemArtist }}</div>
             </div>
         </div>
         <div class="control text-center text-light col-5">
