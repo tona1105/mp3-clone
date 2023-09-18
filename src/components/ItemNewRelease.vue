@@ -2,8 +2,11 @@
     <div>
         <div class="d-flex text-light justify-content-between item__newRelease" style="padding: 10px;">
             <div class="d-flex" style="width: 50%">
-                <div>0</div>
-                <img :src="music.thumbnail" alt="" style="height: 40px; width: 40px;" class="mx-2">
+                <div style="min-width: 1rem;" class="text-center">{{ index + 1 }}</div>
+                <div class="position-relative">
+                    <img :src="music.thumbnail" alt="" class="mx-2 item__thumb">
+                    <i class="fas fa-play icon-play position-absolute item-playButton"></i>
+                </div>
                 <div>
                     <div class="fw-bold">{{ music.title }}</div>
                     <div style="font-size: 0.8rem;">
@@ -33,6 +36,10 @@ export default {
             defaul() {
                 return {}
             }
+        },
+        index: {
+            type: Number,
+            required: true
         }
     },
     methods: {

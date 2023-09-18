@@ -8,13 +8,14 @@
     color: azure;
     font-size: 1.75rem;
 }
-.btn__purple{
+
+.btn__purple {
     background: #8B45CA !important;
 }
 
 .btn.btn__newReleaseBg {
     background: #170F23;
-    color:white;
+    color: white;
 }
 
 .btn.btn__newReleaseBg:hover {
@@ -23,7 +24,7 @@
 
 /* NewRelease */
 .item__newRelease:hover {
- background-color: #696969;
+    background-color: #696969;
 }
 
 
@@ -31,6 +32,7 @@
     background-color: #121212;
     border-radius: 1rem;
 }
+
 .bg-playlist {
     background-color: #242424;
 }
@@ -38,6 +40,30 @@
 .footer {
     color: #A7A7A7;
     font-size: 0.75rem
+}
+
+/* ItemContent */
+.item__thumb {
+    height: 40px;
+    width: 40px;
+}
+
+.item__newRelease:hover {
+    cursor: pointer;
+}
+
+.item-playButton {
+    top: 25%;
+    left: 40%;
+    display: none;
+}
+
+.item__newRelease:hover .item__thumb {
+    opacity: 0.6;
+}
+
+.item__newRelease:hover .item-playButton {
+    display: block;
 }
 
 
@@ -58,4 +84,45 @@
     bottom: 10%;
     left: 0;
 }
-/* ItemContent */
+
+/* Player */
+.cd_thumb {
+    border-radius: 50%;
+}
+
+.cd__spin {
+    animation: spin 2s linear infinite;
+}
+
+.progress {
+    background-color: #212529 !important;
+    padding: 7px 10px !important;
+}
+
+.vue-slider-rail {
+    background-color: #9b9b9b !important;
+}
+
+
+
+.vue-slider-progress,
+.vue-slider-dot-handle {
+    background-color: #E1E1E1 !important;
+    border: none !important;
+}
+
+.vue-slider-dot-handle-focus {
+    border-color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

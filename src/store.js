@@ -14,9 +14,18 @@ const store = new Vuex.Store({
       state.idPlay = num;
     },
     nextPlay(state) {
-      state.idPlay++
+      const listLength = state.listPlay.length
+      console.log(listLength);
+      if (state.idPlay === listLength - 1) {
+        state.idPlay = 0
+      }
+      else state.idPlay++
     },
     previousPlay(state) {
+      const listLength = state.listPlay.length
+      if (state.idPlay === 0) {
+        state.idPlay = listLength - 1
+      }
       state.idPlay--
     },
     randomPlay(state) {{

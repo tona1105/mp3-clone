@@ -37,7 +37,7 @@
             </div>
             <div v-for="(item, index) in listNewRelease" :key="index" class="position-relative item__lineDown"
                 @click="emitPlayList(index)">
-                <ItemNewRelease :music="item" />
+                <ItemNewRelease :music="item" :index="index"/>
             </div>
         </div>
 
@@ -98,7 +98,6 @@ export default {
         ...mapMutations(['updateSharedData']),
         async emitPlayList(index) {
             const data = this.listNewRelease.map(item => item)
-            console.log(data);
             const num = index
             this.updateSharedData({ data, num })
         },

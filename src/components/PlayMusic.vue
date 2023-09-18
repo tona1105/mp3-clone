@@ -1,18 +1,21 @@
 <template>
     <div class="fixed-bottom bg-dark text-light row" style="height: 10%;">
         <div class="col-4 d-flex align-items-center">
-            <div>Ảnh</div>
+            <div v-if="itemThumb">
+                <img :src="itemThumb" alt="" style="height: 50px; width: 50px;" class="cd_thumb" 
+                :class="isPlayed ? 'cd__spin' : ''">
+            </div>
             <div class="text-light mx-3">
                 <div>{{ itemTitle }}</div>
                 <div>{{ itemArtist }}</div>
             </div>
         </div>
         <div class="control text-center text-light col-5">
-            <div class="btn btn-repeat text-light" @click="loopSong" :style="isLoop ? { backgroundColor: 'pink' } : ''">
-                <i class="fas fa-redo"></i>
+            <div class="btn btn-repeat text-light" @click="loopSong" :style="isLoop ? { backgroundColor: '#018da1' } : ''">
+                <i class="fas fa-redo fs-5"></i>
             </div>
             <div class="btn btn-prev" @click="previousSong">
-                <i class="fas fa-step-backward"></i>
+                <i class="fas fa-step-backward fs-5"></i>
             </div>
             <div class="btn btn-toggle-play" :style="!isPlayed ? { display: 'none' } : ''" @click="pauseAudio()">
                 <i class="fas fa-pause icon-pause"></i>
@@ -21,10 +24,10 @@
                 <i class="fas fa-play icon-play"></i>
             </div>
             <div class="btn btn-next" @click="nextSong">
-                <i class="fas fa-step-forward"></i>
+                <i class="fas fa-step-forward fs-5"></i>
             </div>
-            <div class="btn btn-random" @click="toggleRandom" :style="isRandom ? { backgroundColor: 'pink' } : ''">
-                <i class="fas fa-random"></i>
+            <div class="btn btn-random" @click="toggleRandom" :style="isRandom ? { backgroundColor: '#018da1' } : ''">
+                <i class="fas fa-random fs-5"></i>
             </div>
             <vue-slider id="progress" class="progress" type="range" step="1" :min="0" :max="100" v-model="progress"
                 @change="changeProgress" />
@@ -48,7 +51,6 @@ export default {
     data() {
         return {
             listDetailItem: [],
-            isPlaying: 0,
             itemThumb: '',
             itemTitle: '',
             itemArtist: '',
@@ -82,7 +84,7 @@ export default {
                 setTimeout(() => {
                     this.setSong(newValue);
                     this.playAudio();
-                }, 300); // Đợi 1 giây trước khi thực hiện
+                }, 1000); // Đợi 1 giây trước khi thực hiện
             },
 
         },
@@ -98,10 +100,20 @@ export default {
             }
         },
         setSong(id) {
-            this.$refs.audio.src = this.listDetailItem[id].source['128']
-            this.itemThumb = this.listDetailItem[id].thumb
-            this.itemTitle = this.listDetailItem[id].title
-            this.itemArtist = this.listDetailItem[id].artists_names
+            const item = this.listDetailItem[id]
+            console.log(item);
+            // this.$refs.audio.src = require('@/assets/music/giac-mo-cua-em.mp3')
+            if(item.source['128']) {
+                this.$refs.audio.src = require('@/assets/music/' + item.source['128'])
+                console.log(this.$refs.audio.src);
+               
+            }
+            else {
+                this.$refs.audio.src = require('@/assets/music/' + item.source.mp4['360p'])
+            }
+            this.itemThumb = item.thumbnail
+            this.itemTitle = item.title
+            this.itemArtist = item.artists_names
         },
         playAudio() {
             this.$refs.audio.play()
