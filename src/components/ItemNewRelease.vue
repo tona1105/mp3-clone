@@ -14,8 +14,8 @@
                     </div>
                 </div>
             </div>
-            <div style="color: #97939C">
-                Hôm nay
+            <div style="color: #97939C; text-align: start; min-width: 300px;">
+                {{ music.title }}
             </div>
             <div style="color: #97939C">
                 {{ fancyTimeFormat(music.duration) }}

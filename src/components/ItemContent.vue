@@ -1,11 +1,80 @@
 <template>
-    <div class="text-light p-3 rounded" style="background-color: #282828;">
-        <img src="https://i.scdn.co/image/ab67656300005f1f59723bbe4d73735d7e87265e" alt=""
-            style="height: 158px; width: 100%;"
-            class="" >
-        <div class="">
-            <p class="my-2">ABc</p>
-            <p>Ãyx</p>
+    <div>
+        <div class="d-flex text-light justify-content-between item__newRelease" style="padding: 10px;">
+            <div class="d-flex" style="width: 50%">
+                <div style="min-width: 2rem;" class="text-center fs-2" :style="bindStyleForRank(index)">
+                    {{ index + 1 }}
+                </div>
+                <div class="position-relative">
+                    <img :src="music.thumbnail" alt="" class="mx-2 item__thumb">
+                    <i class="fas fa-play icon-play position-absolute item-playButton"></i>
+                </div>
+                <div>
+                    <div class="fw-bold">{{ music.title }}</div>
+                    <div style="font-size: 0.8rem;">
+                        {{ music.artistsNames }}
+                    </div>
+                </div>
+            </div>
+            <div style="color: #97939C; text-align: start; min-width: 300px;">
+                {{ music.title }}
+            </div>
+            <div style="color: #97939C">
+                {{ fancyTimeFormat(music.duration) }}
+            </div>
+        </div>
+        <div>
+
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    props: {
+        music: {
+            type: Object,
+            required: true,
+            defaul() {
+                return {}
+            }
+        },
+        index: {
+            type: Number,
+            required: true
+        }
+    },
+    methods: {
+        bindStyleForRank(index) {
+            if (index === 0) {
+                return 'color: red'
+            }
+            else if (index === 1) {
+                return 'color: yellow'
+            }
+            else if (index === 2) {
+                return 'color: blue'
+            }
+            else return 'color: white'
+        },
+        fancyTimeFormat(duration) {
+            // Hours, minutes and seconds
+            const hrs = ~~(duration / 3600);
+            const mins = ~~((duration % 3600) / 60);
+            const secs = ~~duration % 60;
+
+            // Output like "1:01" or "4:03:59" or "123:03:59"
+            let ret = "";
+
+            if (hrs > 0) {
+                ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+            }
+
+            ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+            ret += "" + secs;
+
+            return ret;
+        }
+    }
+}
+</script>

@@ -2,13 +2,13 @@
     <div class="bg-black h-100">
         <!-- Home + Search -->
         <div class="bg-nav text-light mx-2 mb-2 px-4 py-2">
-            <span class="d-flex align-items-baseline"  
+            <router-link to='/' class="d-flex align-items-baseline text-light"  
                 @click="chooseHome"
                 :class="this.click === 1 ? 'fw-bold' : ''"
                 >
                 <i class="fa-solid fa-house"></i>
                 <p class="mx-4">Home</p>
-            </span>
+            </router-link>
             <span class="d-flex align-items-baseline"  
                 @click="chooseSearch"
                 :class="this.click === 2 ? 'fw-bold' : ''">

@@ -2,6 +2,11 @@
     background-color: #000000;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
 /* btn */
 
 .btn i {

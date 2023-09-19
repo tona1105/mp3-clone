@@ -46,7 +46,6 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import VueSlider from 'vue-slider-component'
-import axios from 'axios'
 export default {
     data() {
         return {
@@ -67,14 +66,13 @@ export default {
         VueSlider
     },
     computed: {
-        ...mapState(['listPlay', 'idPlay']),
+        ...mapState(['listPlay', 'idPlay', 'typePlay']),
     },
     watch: {
         listPlay: {
             handler(newValue) {
                 // Khi dữ liệu từ Vuex thay đổi, bạn có thể cập nhật listPlayItem
-                this.listMusic = [...newValue]; // Sử dụng spread operator để tạo một bản sao của mảng
-                this.getDetailItem(this.listMusic)
+                this.listDetailItem = [...newValue]; // Sử dụng spread operator để tạo một bản sao của mảng
                 this.isListReady = true;
             },
 
@@ -91,29 +89,12 @@ export default {
     },
     methods: {
         ...mapMutations(['nextPlay', 'previousPlay', 'randomPlay']),
-        async getDetailItem(listMusic) {
-            try {
-                const response = await axios.get('https://api.jsonstorage.net/v1/json/408d6271-d488-49a0-b66b-6d425e49f6ab/debe0e5e-f24d-4619-961e-68b638904f46')
-                this.listDetailItem = response.data.data.filter(item1 => listMusic.some(item2 => item2.title === item1.name))
-            } catch (error) {
-                console.error('Lỗi khi tải dữ liệu:', error)
-            }
-        },
         setSong(id) {
             const item = this.listDetailItem[id]
-            console.log(item);
-            // this.$refs.audio.src = require('@/assets/music/giac-mo-cua-em.mp3')
-            if(item.source['128']) {
-                this.$refs.audio.src = require('@/assets/music/' + item.source['128'])
-                console.log(this.$refs.audio.src);
-               
-            }
-            else {
-                this.$refs.audio.src = require('@/assets/music/' + item.source.mp4['360p'])
-            }
+            this.$refs.audio.src = require('@/assets/music/' + this.typePlay + '/'  + item.source)
             this.itemThumb = item.thumbnail
             this.itemTitle = item.title
-            this.itemArtist = item.artists_names
+            this.itemArtist = item.artistsNames
         },
         playAudio() {
             this.$refs.audio.play()

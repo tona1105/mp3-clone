@@ -5942,6 +5942,11 @@
   dependencies:
     "vue-class-component" "^7.1.0"
 
+"vue-router@^3.6.5":
+  "integrity" "sha512-VYXZQLtjuvKxxcshuRAwjHnciqZVoXAjTjcqBTz4rKc8qih9g9pI3hbDjmqXaHdgL3v8pV6P8Z335XvHzESxLQ=="
+  "resolved" "https://registry.npmjs.org/vue-router/-/vue-router-3.6.5.tgz"
+  "version" "3.6.5"
+
 "vue-slider-component@^3.2.24":
   "integrity" "sha512-28hfotAL/CPXPwqHgVFyUwUEV0zweoc2wW0bgraGkoIcRZGlFjk8caYJLE8+Luug5t3b9tJm/NyDXpyIdmcYZg=="
   "resolved" "https://registry.npmjs.org/vue-slider-component/-/vue-slider-component-3.2.24.tgz"
