@@ -2,7 +2,7 @@
     <div>
         <div class="d-flex text-light justify-content-between item__newRelease" style="padding: 10px;">
             <div class="d-flex" style="width: 50%">
-                <div style="min-width: 2rem;" class="text-center fs-2" :style="bindStyleForRank(index)">
+                <div style="min-width: 2.25rem;" class="text-center fs-2" :style="bindStyleForRank(index)">
                     {{ index + 1 }}
                 </div>
                 <div class="position-relative">
@@ -12,7 +12,7 @@
                 <div>
                     <div class="fw-bold">{{ music.title }}</div>
                     <div style="font-size: 0.8rem;">
-                        {{ music.artistsNames }}
+                        {{ music.artists_names }}
                     </div>
                 </div>
             </div>

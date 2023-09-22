@@ -7,6 +7,7 @@ a {
     color: black;
 }
 
+
 /* btn */
 
 .btn i {
@@ -47,13 +48,22 @@ a {
     font-size: 0.75rem
 }
 
-/* ItemContent */
-.item-title {
+/* Item */
+.item-title__play {
     width: 180px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; 
+    
 }
+
+.item-title {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
 .item__thumb {
     height: 40px;
     width: 40px;
@@ -130,6 +140,25 @@ a {
     border-color: #ffffff !important;
     box-shadow: none !important;
 }
+
+/* Top 10 */
+.img-top10:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.top10-playButton {
+    font-size: 5rem;
+    top: 25%;
+    left: 45%;
+    color: antiquewhite;
+    display: none;
+}
+
+.img-top10:hover .top10-playButton {
+    display: block !important;
+}
+
 
 
 @keyframes spin {

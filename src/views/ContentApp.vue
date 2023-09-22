@@ -26,7 +26,7 @@
                         <div class="btn btn__newReleaseBg" @click="getAllNewInWorld"
                             :class="this.keyNewRelease === 'World' ? 'btn__purple' : ''">Quốc tế</div>
                     </div>
-                    <div>Tất cả</div>
+                   
                 </div>
             </div>
             <div class="d-flex justify-content-between text-light position-relative item__lineDown2"
@@ -59,8 +59,8 @@ export default {
                     route: 'bxh-nhac-moi'
                 },
                 {
-                    name: 'Top 100',
-                    route: 'top-100'
+                    name: 'Top 10',
+                    route: 'top10'
                 },
                 {
                     name: `Artist's Story`,

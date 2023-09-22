@@ -6,8 +6,8 @@
                 :class="isPlayed ? 'cd__spin' : ''">
             </div>
             <div class="text-light mx-3">
-                <div class="item-title">{{ itemTitle }}</div>
-                <div class="item-title">{{ itemArtist }}</div>
+                <div class="item-title__play">{{ itemTitle }}</div>
+                <div class="item-title__play">{{ itemArtist }}</div>
             </div>
         </div>
         <div class="control text-center text-light col-5">
@@ -94,7 +94,13 @@ export default {
             this.$refs.audio.src = require('@/assets/music/' + this.typePlay + '/'  + item.source)
             this.itemThumb = item.thumbnail
             this.itemTitle = item.title
-            this.itemArtist = item.artistsNames
+            if(item.artists_names) {
+                this.itemArtist = item.artists_names
+            }
+            else {
+                this.itemArtist = item.artistsNames
+            }
+            
         },
         playAudio() {
             this.$refs.audio.play()

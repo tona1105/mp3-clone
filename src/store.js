@@ -7,13 +7,17 @@ const store = new Vuex.Store({
   state: {
     listPlay: null,
     typePlay: null,
-    idPlay: null
+    idPlay: null,
+    infoTop10: null
   },
   mutations: {
     updateSharedData(state, {data,type,num}) {
       state.listPlay = data;
       state.typePlay = type
       state.idPlay = num;
+    },
+    updateInfoTop10(state, data) {
+      state.infoTop10 = data
     },
     nextPlay(state) {
       const listLength = state.listPlay.length
