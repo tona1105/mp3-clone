@@ -7,7 +7,7 @@
                     <i class="fas fa-play icon-play position-absolute item-playButton"></i>
                 </div>
                 <div>
-                    <div class="fw-bold">{{ music.title }}</div>
+                    <div class="fw-bold hideOverFlowText">{{ music.title }}</div>
                     <div style="font-size: 0.8rem;">
                         {{ music.artists_names }}
                     </div>

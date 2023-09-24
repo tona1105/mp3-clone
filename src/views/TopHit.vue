@@ -1,6 +1,6 @@
 <template>
     <DefaultLayout>
-        <div class="text-light fs-2 fw-bold">
+        <div class="text-light fs-2 fw-bold" style="padding-top: 10%;">
             BXH Nhạc Mới
             <span @click="playList">
                 <i class="fa-regular fa-circle-play"></i>

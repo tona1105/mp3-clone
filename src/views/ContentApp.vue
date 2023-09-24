@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>
+        <div style="padding-top: 10%;">
             <div class="">
                 <div class="d-flex justify-content-between align-content-center">
                     <h4 class="text-light fw-bold">Shows to try</h4>
@@ -45,7 +45,6 @@
 
 <script>
 import axios from 'axios'
-// import ItemContent from './ItemContent.vue';
 import { mapMutations, mapGetters } from 'vuex';
 import ItemNewRelease from '@/components/ItemNewRelease.vue';
 
@@ -117,8 +116,7 @@ export default {
         async emitPlayList(index) {
             const data = this.listNewRelease.map(item => item)
             const num = index
-            const type = 'newrelease'
-            this.updateSharedData({ data, type, num })
+            this.updateSharedData({ data, num })
         },
 
 

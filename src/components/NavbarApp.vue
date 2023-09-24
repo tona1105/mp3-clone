@@ -34,25 +34,6 @@
                     <p>It's easy, we'll help you</p>
                     <div class="btn btn-light text-dark fw-bold">Create playlist</div>
                 </div>
-                <div>
-                    <div class="bg-playlist mt-4 mx-2 rounded p-3">
-                        <p class="fw-bold">Let's find some podcasts to follow</p>
-                        <p>We'll keep you updated on new episodes</p>
-                        <div class="btn btn-light text-dark fw-bold">Browse podcarts</div>
-                    </div>
-                </div>
-                <!-- Footer -->
-                <!-- <div class="footer mt-5">
-                <div class="d-flex justify-content-between">
-                    <span>Legal</span>
-                    <span>Privacy Center</span>
-                    <span>Privacy Policy</span>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <span>Cookies</span>
-                    <span>About Ads</span>
-                    <span>Accessibility</span>
-                </div>  -->
             </div>
         </div>
 

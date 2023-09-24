@@ -7,6 +7,17 @@ a {
     color: black;
 }
 
+input {
+    all: unset;
+}
+
+.hideOverFlowText {
+    width: 240px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
 
 /* btn */
 
@@ -159,6 +170,18 @@ a {
     display: block !important;
 }
 
+/* HeaderContent */
+.headerContent {
+    position: fixed;
+    width: 75%;
+}
+.search__bg {
+    background-color: #E1E1E1;
+    width: 40%;
+}
+.icon-user {
+
+}
 
 
 @keyframes spin {

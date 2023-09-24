@@ -2,8 +2,8 @@
     <div class="fixed-bottom bg-dark text-light row" style="height: 10%;">
         <div class="col-4 d-flex align-items-center">
             <div v-if="itemThumb">
-                <img :src="itemThumb" alt="" style="height: 50px; width: 50px;" class="cd_thumb" 
-                :class="isPlayed ? 'cd__spin' : ''">
+                <img :src="itemThumb" alt="" style="height: 50px; width: 50px;" class="cd_thumb"
+                    :class="isPlayed ? 'cd__spin' : ''">
             </div>
             <div class="text-light mx-3">
                 <div class="item-title__play">{{ itemTitle }}</div>
@@ -62,6 +62,14 @@ export default {
             isRandom: false
         }
     },
+    created() {
+        // Add a global event listener for the 'keydown' event
+        window.addEventListener('keydown', this.handleKeyDown);
+    },
+    destroyed() {
+        // Remove the event listener when the component is destroyed
+        window.removeEventListener('keydown', this.handleKeyDown);
+    },
     components: {
         VueSlider
     },
@@ -88,19 +96,20 @@ export default {
         },
     },
     methods: {
+
         ...mapMutations(['nextPlay', 'previousPlay', 'randomPlay']),
         setSong(id) {
             const item = this.listDetailItem[id]
-            this.$refs.audio.src = require('@/assets/music/' + this.typePlay + '/'  + item.source)
+            this.$refs.audio.src = require('@/assets/music/all/' + item.source)
             this.itemThumb = item.thumbnail
             this.itemTitle = item.title
-            if(item.artists_names) {
+            if (item.artists_names) {
                 this.itemArtist = item.artists_names
             }
             else {
                 this.itemArtist = item.artistsNames
             }
-            
+
         },
         playAudio() {
             this.$refs.audio.play()
@@ -153,6 +162,14 @@ export default {
                 this.playAudio()
             }
             else this.nextSong()
+        },
+        handleKeyDown(event) {
+            console.log(event.keyCode);
+            if (event.key === ' ' || event.keyCode === 32) {
+                event.preventDefault()
+                // Check for the spacebar key using the 'key' property or 'keyCode'
+                this.isPlayed === true ? this.pauseAudio() : this.playAudio()
+            }
         }
     }
 }

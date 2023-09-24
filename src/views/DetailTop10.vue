@@ -30,7 +30,7 @@
                     Lời tựa: {{ infoTop10.sortDescription }}
                 </div>
                 <!-- xài flex !!! -->
-                <div class="d-flex text-light justify-content-between align-items-end item__newRelease"
+                <div class="d-flex text-light justify-content-between align-items-end position-relative item__lineDown2"
                     style="padding: 10px;">
                     <div class="position-relative w-50">
                         Bài hát
@@ -43,7 +43,8 @@
                     </div>
                 </div>
                 <div>
-                    <div v-for="(item, index) in listDetail" :key=index @click="emitPlayListWithId(index)">
+                    <div v-for="(item, index) in listDetail" :key=index @click="emitPlayListWithId(index)"
+                    class="position-relative item__lineDown2">
                         <ItemTop10 :music=item />
                     </div>
                 </div>
@@ -107,14 +108,12 @@ export default {
         emitPlayListWithId(index) {
             const data = this.listDetail.map(item => item)
             const num = index
-            const type = 'top10' + this.slug
-            this.updateSharedData({ data, type, num })
+            this.updateSharedData({ data, num })
         },
         emitPlayList() {
             const data = this.listDetail.map(item => item)
             const num = 0
-            const type = 'top10' + this.slug
-            this.updateSharedData({ data, type, num })
+            this.updateSharedData({ data, num })
         },
 
     }

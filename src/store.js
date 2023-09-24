@@ -6,14 +6,12 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     listPlay: null,
-    typePlay: null,
     idPlay: null,
     infoTop10: null
   },
   mutations: {
-    updateSharedData(state, {data,type,num}) {
+    updateSharedData(state, {data,num}) {
       state.listPlay = data;
-      state.typePlay = type
       state.idPlay = num;
     },
     updateInfoTop10(state, data) {
