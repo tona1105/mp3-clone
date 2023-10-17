@@ -81,7 +81,7 @@ export default {
         this.getAllMusic()
     },
     methods: {
-        ...mapMutations(['updateSharedData']),
+        ...mapMutations(['updateSharedData','updateAudioInfo']),
         async getAllMusic() {
             const res = await axios.get(`https://api.jsonstorage.net/v1/json/408d6271-d488-49a0-b66b-6d425e49f6ab/f2b48941-180a-4f66-a6f2-c2886d13514e`)
             this.listAllMusic = res.data.data
@@ -110,6 +110,7 @@ export default {
             const data = [item]
             const num = 0
             this.updateSharedData({ data, num })
+            this.updateAudioInfo({data,num})
         }
     }
 

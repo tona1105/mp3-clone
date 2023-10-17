@@ -5,12 +5,16 @@
                 <NavbarApp />
             </div>
             <div class="col-9 position-relative"
-                style="background: linear-gradient(to top, #000000, #363636); margin-left: -0.75rem;">
+                style="background: linear-gradient(to top, #000000, #363636); margin-left: -0.75rem; padding-bottom: 10%;">
                 <HeaderContent/>
                 <slot></slot>
             </div>
         </div>
-        <PlayMusic />
+
+            <PlayMusic />
+        
+           
+        
     </div>
 </template>
 

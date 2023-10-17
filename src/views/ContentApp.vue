@@ -7,7 +7,8 @@
                     <p class="text-light" style="margin-top: 5px; margin-right: 10px;">Show all</p>
                 </div>
                 <div class="slide text-light row ">
-                    <router-link :to="{name: item.route}" class="col btn" v-for="(item, index) in listAlbumRecommend" :key="index">
+                    <router-link :to="{ name: item.route }" class="col btn" v-for="(item, index) in listAlbumRecommend"
+                        :key="index">
                         <div class="w-100 bg-info px-3 py-4 text-center rounded">
                             <h4>{{ item.name }}</h4>
                         </div>
@@ -26,7 +27,7 @@
                         <div class="btn btn__newReleaseBg" @click="getAllNewInWorld"
                             :class="this.keyNewRelease === 'World' ? 'btn__purple' : ''">Quốc tế</div>
                     </div>
-                   
+
                 </div>
             </div>
             <div class="d-flex justify-content-between text-light position-relative item__lineDown2"
@@ -35,8 +36,8 @@
                 <span>Thời gian</span>
             </div>
             <div v-for="(item, index) in listNewRelease" :key="index" class="position-relative item__lineDown"
-                @click="emitPlayList(index)" :class="itemPlayBG(item.title)">
-                <ItemNewRelease :music="item" :index="index"/>
+                @click="emitPlayList(index)" :class="itemPlayBG(item.title)" :ref="item.title"  >
+                <ItemNewRelease :music="item" :index="index" />
             </div>
         </div>
 
@@ -47,7 +48,6 @@
 import axios from 'axios'
 import { mapMutations, mapGetters } from 'vuex';
 import ItemNewRelease from '@/components/ItemNewRelease.vue';
-
 export default {
     data() {
         return {
@@ -69,11 +69,12 @@ export default {
                     name: 'Chill/Thư giãn',
                     route: 'chill'
                 }
-                
+
             ],
             listNewRelease: [],
             filterList: [],
             keyNewRelease: 'All',
+
         }
     },
     components: {
@@ -81,6 +82,11 @@ export default {
     },
     computed: {
         ...mapGetters(['getIdPlay']),
+    },
+    watch: {
+        getIdPlay() {
+            this.scrollToElement();
+        },
     },
     created() {
         this.getListNewRelease()
@@ -90,7 +96,7 @@ export default {
             const res = await axios.get('https://api.jsonstorage.net/v1/json/408d6271-d488-49a0-b66b-6d425e49f6ab/f669d3ff-0751-4184-bc1e-d0b296e544ac')
             this.listNewRelease = res.data.data
             this.filterList = res.data.data
-            this.isListChanged = true 
+            this.isListChanged = true
         },
         getAllNew() {
             this.listNewRelease = []
@@ -101,25 +107,31 @@ export default {
             this.keyNewRelease = 'VN'
             const listVN = this.filterList.filter(item => item.isWorldWide === true)
             this.listNewRelease = listVN
-            this.isListChanged = true 
+            this.isListChanged = true
         },
         getAllNewInWorld() {
             this.keyNewRelease = 'World'
             const listVN = this.filterList.filter(item => item.isWorldWide === false)
             this.listNewRelease = listVN
-            this.isListChanged = true 
+            this.isListChanged = true
         },
         itemPlayBG(index) {
             if (index === this.getIdPlay) return 'item__playing'
         },
-        ...mapMutations(['updateSharedData']),
+        ...mapMutations(['updateSharedData', 'updateAudioInfo']),
         async emitPlayList(index) {
             const data = this.listNewRelease.map(item => item)
             const num = index
             this.updateSharedData({ data, num })
+            this.updateAudioInfo()
         },
-
-
+        scrollToElement() {
+            // Get a reference to the current song element
+            const currentSongElement = this.$refs[this.getIdPlay];
+            console.log(currentSongElement);
+            // Use JavaScript's scrollIntoView method
+            currentSongElement.value?.scrollIntoView({behavior: "smooth"})
+        },
     }
 }
 </script>

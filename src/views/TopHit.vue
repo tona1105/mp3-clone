@@ -40,19 +40,17 @@ export default {
             const res = await axios.get(`https://api.jsonstorage.net/v1/json/408d6271-d488-49a0-b66b-6d425e49f6ab/6d643de7-232c-4881-9ef4-a256315726c5`)
             this.listTopHit = res.data.song
         },
-        ...mapMutations(['updateSharedData']),
+        ...mapMutations(['updateSharedData','updateAudioInfo']),
         playList() {
             const data = this.listTopHit.map(item => item)
-            const num = 0
-            const type = 'tophit'
-            this.updateSharedData({ data, type, num })
+            const num = 0   
+            this.updateSharedData({ data, num })
         },
         emitPlayList(index) {
-
             const data = this.listTopHit.map(item => item)
             const num = index
-            const type = 'tophit'
-            this.updateSharedData({ data, type, num })
+            this.updateSharedData({ data, num })
+            this.updateAudioInfo({data,num})
         },
         itemPlayBG(index) {
             if (index === this.getIdPlay) return 'item__playing'

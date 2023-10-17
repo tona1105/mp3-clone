@@ -60,6 +60,9 @@ export default {
             ret += "" + secs;
 
             return ret;
+        },
+        scrollToElement() {
+
         }
     }
 }

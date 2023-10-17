@@ -1,13 +1,13 @@
 <template>
     <div class="fixed-bottom bg-dark text-light row" style="height: 10%;">
         <div class="col-4 d-flex align-items-center">
-            <div v-if="itemThumb">
-                <img :src="itemThumb" alt="" style="height: 50px; width: 50px;" class="cd_thumb"
+            <div v-if="audioInfo.itemThumb">
+                <img :src="audioInfo.itemThumb" alt="" style="height: 50px; width: 50px;" class="cd_thumb"
                     :class="isPlayed ? 'cd__spin' : ''">
             </div>
             <div class="text-light mx-3">
-                <div class="item-title__play">{{ itemTitle }}</div>
-                <div class="item-title__play">{{ itemArtist }}</div>
+                <div class="item-title__play">{{ audioInfo.itemTitle }}</div>
+                <div class="item-title__play">{{ audioInfo.itemArtist }}</div>
             </div>
         </div>
         <div class="control text-center text-light col-5">
@@ -17,10 +17,10 @@
             <div class="btn btn-prev" @click="previousSong">
                 <i class="fas fa-step-backward fs-5"></i>
             </div>
-            <div class="btn btn-toggle-play" :style="!isPlayed ? { display: 'none' } : ''" @click="pauseAudio()">
+            <div class="btn btn-toggle-play" :style="!audioInfo.isPlayed ? { display: 'none' } : ''" @click="pauseAudio()">
                 <i class="fas fa-pause icon-pause"></i>
             </div>
-            <div class="btn btn-toggle-play" :style="isPlayed ? { display: 'none' } : ''" @click="playAudio()">
+            <div class="btn btn-toggle-play" :style="audioInfo.isPlayed ? { display: 'none' } : ''" @click="playAudio()">
                 <i class="fas fa-play icon-play"></i>
             </div>
             <div class="btn btn-next" @click="nextSong">
@@ -29,17 +29,16 @@
             <div class="btn btn-random" @click="toggleRandom" :style="isRandom ? { backgroundColor: '#018da1' } : ''">
                 <i class="fas fa-random fs-5"></i>
             </div>
-            <vue-slider id="progress" class="progress" type="range" step="1" :min="0" :max="100" v-model="progress"
-                @change="changeProgress" />
-            <audio ref="audio" @timeupdate="updateProgress" @ended="onAudioEnd"></audio>
+            <vue-slider id="progress" class="progress" type="range" step="1" :min="0" :max="100"
+                v-model="audioInfo.progress" @change="handleChangeProgress" />
+            <audio ref="audio" :src="require('@/assets/music/all/' + audioInfo.src)" @timeupdate="handleUpdateProgress"
+                @ended="onAudioEnd"></audio>
         </div>
         <div class="volume col-3 d-flex align-items-center">
             <i class="fas fa-volume-up volume-btn"></i>
             <vue-slider type="range" ref="volume" class=" w-75 volume-range" :min="0" :max="100" v-model="vol"
                 @change="changeVol" />
         </div>
-
-
     </div>
 </template>
 
@@ -54,7 +53,7 @@ export default {
             itemTitle: '',
             itemArtist: '',
             itemPlaying: '',
-            isPlayed: false,
+            isPlayed: '',
             vol: 100,
             progress: 0,
             isListReady: false,
@@ -62,9 +61,11 @@ export default {
             isRandom: false
         }
     },
+
     created() {
         // Add a global event listener for the 'keydown' event
         window.addEventListener('keydown', this.handleKeyDown);
+
     },
     destroyed() {
         // Remove the event listener when the component is destroyed
@@ -75,73 +76,115 @@ export default {
     },
     computed: {
         ...mapState(['listPlay', 'idPlay', 'typePlay']),
+        audioInfo() {
+            const audioInfo = this.$store.getters.audioInfo;
+            console.log(audioInfo); // Kiểm tra audioInfo trong console
+            return audioInfo;
+        },
     },
     watch: {
-        listPlay: {
-            handler(newValue) {
-                // Khi dữ liệu từ Vuex thay đổi, bạn có thể cập nhật listPlayItem
-                this.listDetailItem = [...newValue]; // Sử dụng spread operator để tạo một bản sao của mảng
-                this.isListReady = true;
-            },
-
-        },
         idPlay: {
-            handler(newValue) {
+            handler() {
+                this.updateAudioInfo()
+                this.setSong();
                 setTimeout(() => {
-                    this.setSong(newValue);
-                    this.playAudio();
-                }, 1000); // Đợi 1 giây trước khi thực hiện
+                    this.playAudio()
+                }, 200); // Đợi 0.2 giây trước khi thực hiện
             },
 
         },
+        'audioInfo.isPlayed'() {
+            this.isPlayed = this.audioInfo.isPlayed
+        },
+        'audioInfo.vol'() {
+            this.$refs.audio.volume = this.audioInfo.vol
+        },
+        'audioInfo.progress'() {
+            this.$refs.audio.progress = this.audioInfo.progress
+        }
     },
     methods: {
-
-        ...mapMutations(['nextPlay', 'previousPlay', 'randomPlay']),
-        setSong(id) {
-            const item = this.listDetailItem[id]
-            this.$refs.audio.src = require('@/assets/music/all/' + item.source)
-            this.itemThumb = item.thumbnail
-            this.itemTitle = item.title
+        ...mapMutations(['nextPlay', 'previousPlay', 'randomPlay', 'updateAudioInfo', 'updateVol',
+            'updateProgress', 'changeProgress', 'updatePlayorPause','updateRandomOrNot']),
+        setSong() {
+            // this.$refs.audio.src = null
+            const item = this.audioInfo
+            // this.$refs.audio.src = require('@/assets/music/all/' + item.src)
+            // // const src = require('@/assets/music/all/' + item.source)
+    
+            this.itemThumb = item.itemThumb
+            this.itemTitle = item.itemTitle
             if (item.artists_names) {
                 this.itemArtist = item.artists_names
             }
             else {
-                this.itemArtist = item.artistsNames
+                this.itemArtist = item.itemArtist
             }
-
+           
         },
         playAudio() {
+            this.updatePlayorPause(true)
             this.$refs.audio.play()
-            this.isPlayed = true
+            console.log('play');
         },
         pauseAudio() {
+            this.updatePlayorPause(false)
             this.$refs.audio.pause()
-            this.isPlayed = false
-
+            
+            const time = this.audioInfo.progress * this.$refs.audio.duration / 100
+            console.log(time);
+            this.$refs.audio.currentTime = time
+            console.log('pause');
         },
         changeVol() {
-            this.$refs.audio.volume = this.vol / 100
-            console.log(this.vol);
+
+            const volume = this.vol / 100
+            this.updateVol(volume)
         },
-        updateProgress() {
+        handleUpdateProgress() {
             const audio = this.$refs.audio;
             const duration = audio.duration;
             const currentTime = audio.currentTime;
+    
+            let progress = 0
             if (!isNaN(duration) && isFinite(duration)) {
-                this.progress = (currentTime / duration) * 100;
+
+                progress = (currentTime / duration) * 100;
             }
             else {
-                this.progress = 0
+
+                progress = 0
             }
+            console.log(progress);
+            this.updateProgress(progress)
         },
-        changeProgress() {
-            const time = this.$refs.audio.duration * this.progress / 100
+        handleChangeProgress() {
+            
+            const time = this.$refs.audio.duration * this.audioInfo.progress / 100
+            console.log(time);
             this.$refs.audio.currentTime = time
+
+            const audio = this.$refs.audio;
+            const duration = audio.duration;
+            const currentTime = audio.currentTime;
+    
+            let progress = 0
+            if (!isNaN(duration) && isFinite(duration)) {
+
+                progress = (currentTime / duration) * 100;
+            }
+            else {
+
+                progress = 0
+            }
+            this.changeProgress(progress)
+           
+            
         },
         nextSong() {
             if (this.isRandom) this.randomPlay()
             else this.nextPlay()
+            console.log(this.$store.state.idPlay);
         },
         previousSong() {
             if (this.isRandom) this.randomPlay()
@@ -150,7 +193,7 @@ export default {
         toggleRandom() {
             if (this.isRandom) this.isRandom = false
             else this.isRandom = true
-            console.log(this.isRandom);
+            this.updateRandomOrNot(this.isRandom)
         },
         loopSong() {
             if (this.isLoop) this.isLoop = false
@@ -170,7 +213,8 @@ export default {
                 // Check for the spacebar key using the 'key' property or 'keyCode'
                 this.isPlayed === true ? this.pauseAudio() : this.playAudio()
             }
-        }
+        },
+        
     }
 }
 </script>
